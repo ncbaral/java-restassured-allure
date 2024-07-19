@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+}
+
+group 'qa.nirmalbaral'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+def aspectJVersion = '1.9.22'
+ext {
+    junitBomVersion = '5.10.3'
+    allureVersion = "2.25.0"
+}
+configurations {
+    agent {
+        canBeResolved = true
+        canBeConsumed = true
+    }
+}
+
+dependencies {
+    agent "org.aspectj:aspectjweaver:$aspectJVersion"
+
+    testImplementation platform('org.junit:junit-bom:5.10.3')
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+    testImplementation('io.rest-assured:rest-assured:5.5.0')
+    testImplementation platform('io.qameta.allure:allure-bom:2.25.0')
+    testImplementation('io.qameta.allure:allure-rest-assured')
+    testImplementation "io.qameta.allure:allure-junit5"
+    testImplementation "org.slf4j:slf4j-simple:2.0.12"
+}
+
+test {
+    ignoreFailures = true
+    useJUnitPlatform()
+    jvmArgs = [ "-javaagent:${configurations.agent.singleFile}" ]
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
