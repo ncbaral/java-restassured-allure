@@ -28,3 +28,10 @@ jobs:
       uses: gradle/actions/setup-gradle@v3
     - name: Build with Gradle
       run: ./gradlew build
+    - name: Run Tests
+      run: gradle clean test
+    - uses: actions/upload-artifact@v3
+      with:
+      name: allure-results
+      path: build/allure-results
+      retention-days: 20
