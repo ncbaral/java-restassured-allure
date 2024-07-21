@@ -32,6 +32,6 @@ jobs:
       run: gradle clean test
     - uses: actions/upload-artifact@v3
       with:
-      name: allure-results
-      path: build/allure-results
-      retention-days: 20
+        name: allure-results
+        path: target/allure-results
+        retention-days: 20
